@@ -2,5 +2,24 @@
 <html>
 	<body>
 		<h1> Web Bluetooth API Experiment </h1>
+		<button id="connect">Connect</button>
+		<script>
+		 window.onload = () => {
+			 let connectBtn = document.querySelector("button#connect");
+			 connectBtn.onclick = (e) => {
+				 let Bluetooth = navigator.bluetooth;
+				 if(Bluetooth !== undefined) {
+					 let devices = [{name: "Nexus 7"}, {name: "Subhash-BlackBerry"}];
+					 let services = [{services: ["generic_access"]}];
+					 Bluetooth.requestDevice({filters: services})
+							  .then(device => device.gatt.connect())
+							  .then(service => console.log(service))
+							  .catch(e => console.error(e));
+				 } else {
+					 console.error("Your browser does not support bluetooth api's yet");
+				 }
+			 };
+		 };
+		</script>
 	</body>
 </html>
